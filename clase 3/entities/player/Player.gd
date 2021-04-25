@@ -23,7 +23,6 @@ func _physics_process(delta):
 	
 	#position.x += direction * speed * delta
 	
-	#var mouse_position:Vector2= get_global_mouse_position()
 	var mouse_position:Vector2= get_local_mouse_position()
 	arm.rotation = mouse_position.normalized().angle()
 	
