@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://spr_turret.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/turret.png" type="Texture" id=2]
+
+[node name="turret" type="Node"]
+
+[node name="spr_turret" type="Sprite" parent="."]
+position = Vector2( 224, 232 )
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="fire_position_turret" type="Position2D" parent="spr_turret"]
+position = Vector2( 0, 32 )
+
+[node name="fire_timer" type="Timer" parent="spr_turret"]
+wait_time = 2.0
+autostart = true
+[connection signal="timeout" from="spr_turret/fire_timer" to="spr_turret" method="_on_fire_timer_timeout"]

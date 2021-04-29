@@ -1,9 +1,10 @@
-extends Sprite
+extends KinematicBody2D
 #var arm
 
 onready var arm = $Arm
 
-var speed = 200 #Pixeles
+export var speed = 300 #Pixeles
+export var acceleration = 0
 
 
 #const projectile_scene: PackedScene = load('res://entities/player/PlayerProyectile.tscn')
@@ -28,9 +29,20 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("fire"):
 		arm.fire()
+		print(self.global_position)
 
 	# Manera optimizada
-	var direction_optimized:int = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
-	
-	position.x += direction_optimized * speed * delta
+	if Input.is_action_pressed("move_right"):  
+		acceleration+= 1
+		print(acceleration)
+		var mySpeed = (speed * delta ) + (acceleration * delta)
+		var movement : Vector2 = Vector2(mySpeed, 0)
+		move_and_collide(movement)
+	elif Input.is_action_pressed("move_left"):
+		acceleration-= 1
+		print(acceleration)
+		var mySpeed = (speed * delta ) - (acceleration * delta)
+		var movement : Vector2 = Vector2(-mySpeed, 0)
+		move_and_collide(movement)
+		
 
