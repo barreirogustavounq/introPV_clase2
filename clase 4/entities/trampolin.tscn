@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/textures/jumpable_platform.png" type="Texture" id=1]
+[ext_resource path="res://trampolin.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 83.7141, 10 )
+
+[node name="trampolin" type="Area2D"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 889.54, 405.879 )
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 885.635, 405.849 )
+scale = Vector2( 2.36781, 0.198232 )
+texture = ExtResource( 1 )
+[connection signal="body_entered" from="." to="." method="_on_trampolin_body_entered"]
