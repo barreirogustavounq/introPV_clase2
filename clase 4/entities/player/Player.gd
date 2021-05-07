@@ -2,13 +2,13 @@ extends KinematicBody2D
 
 onready var cannon = $Cannon
 onready var camera = $Camera2D
+onready var animatedPlayer = $AS_player
 
 export (float) var ACCELERATION:float = 20.0
 export (float) var H_SPEED_LIMIT:float = 600.0
 export (float) var FRICTION_WEIGHT:float = 0.1
 export (float) var JUMP_POWER : float = 200
-export (float) var GRAVITY: float = 10
-
+export (float) var GRAVITY: float = 5
 var velocity:Vector2 = Vector2.ZERO
 var projectile_container
 
@@ -22,7 +22,6 @@ func _physics_process(delta):
 	var mouse_position:Vector2 = get_global_mouse_position()
 	cannon.look_at(mouse_position)
 	
-
 	
 	# Cannon fire
 	if Input.is_action_just_pressed("fire_cannon"):
@@ -30,6 +29,7 @@ func _physics_process(delta):
 			projectile_container = get_parent()
 			cannon.projectile_container = projectile_container
 		cannon.fire()
+
 	
 	#if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
 		#if is_on_floor():
@@ -50,18 +50,34 @@ func _physics_process(delta):
 	#move_and_slide(Vector2(0, position.y))
 	
 	move_and_slide(Vector2.DOWN, Vector2(0,-1))
-	#jump
+	
+	if is_on_floor():
+		if velocity.x < 0:
+			animatedPlayer.flip_h = true
+		if velocity.x > 0:
+			animatedPlayer.flip_h = false
+		if velocity.x != 0:
+			animatedPlayer.animation= "run"
+		else:
+			animatedPlayer.animation= "stay"		
+	else:
+		animatedPlayer.animation="jump"
+		
+		
+	if Input.is_action_pressed("fire_cannon"):
+		animatedPlayer.animation="attack"	
+	#jump	
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 			#camera.current = false
 			position.y -= JUMP_POWER
-
 	
 func notify_hit():
-	print("me pego")
+	#print("me pego")
+	pass
 
 func jumpTrampolin():
-	position.y -= JUMP_POWER * 2
+	position.y -= JUMP_POWER * 1.2
 	
 func in_the_mud():
 	ACCELERATION = 2

@@ -20,8 +20,8 @@ func _physics_process(delta):
 	
 	# Si está fuera de la pantalla
 	var visible_rect:Rect2 = get_viewport().get_visible_rect()
-	if !visible_rect.has_point(global_position):
-		_remove()
+	#if !visible_rect.has_point(global_position):
+	#	_remove()
 
 # Si supero una cantidad de tiempo de vida
 func _on_lifetime_timer_timeout():
@@ -34,5 +34,13 @@ func _remove():
 
 
 func _on_Projectile_body_entered(body):
-		if(body.has_method("notify_hit")):
-			body.notify_hit()
+	if(body.has_method("notify_hit")):
+		body.notify_hit()
+		queue_free()
+
+
+func _on_PlayerProjectile_area_entered(area):
+	print("entre aca")
+	if(area.has_method("notify_hit")):
+		area.notify_hit()
+		queue_free()
