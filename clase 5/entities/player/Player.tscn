@@ -1,0 +1,110 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://entities/player/Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/player/girl_spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/player/raygunPurpleBig.png" type="Texture" id=3]
+[ext_resource path="res://entities/player/Cannon.gd" type="Script" id=4]
+[ext_resource path="res://entities/player/PlayerProjectile.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/textures/player/slimeGreen.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 6714.41, 2997.79 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 13.7002, 38.6411 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "idle"
+length = 0.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 30, 31, 32, 33, 34 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "jump"
+length = 3.0
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 74 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "walk"
+length = 2.3
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 75, 76, 77, 78, 79, 80, 81, 82, 83, 84 ]
+}
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource( 1 )
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( -43.6535, -52.7811 )
+scale = Vector2( 0.236046, 0.268711 )
+texture = SubResource( 1 )
+centered = false
+vframes = 8
+hframes = 15
+frame = 30
+region_rect = Rect2( -21.6478, -3.17088, 6654.85, 3035.82 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.00742, 5.789 )
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Body")
+anims/idle = SubResource( 5 )
+anims/jump = SubResource( 4 )
+anims/walk = SubResource( 3 )
+
+[node name="slime" type="Sprite" parent="."]
+position = Vector2( 1.55907, -36.0814 )
+scale = Vector2( 0.445461, 0.502145 )
+texture = ExtResource( 6 )
+
+[node name="Cannon" type="Sprite" parent="."]
+position = Vector2( 4.88887, -43.465 )
+scale = Vector2( 0.489372, 0.447347 )
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+projectile_scene = ExtResource( 5 )
+
+[node name="CannonTip" type="Position2D" parent="Cannon"]
+position = Vector2( 18.1343, -1.15365 )

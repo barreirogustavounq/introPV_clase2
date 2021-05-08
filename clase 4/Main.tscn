@@ -228,7 +228,7 @@ position = Vector2( -344, 344 )
 position = Vector2( 9500, 300 )
 scale = Vector2( 0.218697, 0.206017 )
 frames = SubResource( 35 )
-frame = 16
+frame = 5
 speed_scale = 3.0
 playing = true
 script = ExtResource( 14 )
@@ -259,7 +259,7 @@ position = Vector2( 1544, 544 )
 position = Vector2( -264, 488 )
 
 [node name="AS_player" parent="Player" index="0"]
-frame = 2
+frame = 7
 
 [node name="Camera2D" parent="Player" index="3"]
 offset = Vector2( 0, -80 )
