@@ -3,6 +3,7 @@ extends KinematicBody2D
 onready var cannon = $Cannon
 onready var animation_body = $AnimationPlayer
 onready var body = $Body
+onready var Collision = $CollisionShape2D
 
 const FLOOR_NORMAL := Vector2.UP  # Igual a Vector2(0, -1)
 const SNAP_DIRECTION := Vector2.UP
@@ -25,6 +26,12 @@ func initialize(projectile_container):
 	cannon.projectile_container = projectile_container
 
 func get_input():
+	if Input.is_action_just_pressed("down"):
+		Collision.rotation =  90 
+		animation_body.play("down")
+	if Input.is_action_just_released("down"):
+		Collision.rotation = 0
+		animation_body.play("idle")
 	# Cannon fire
 	if Input.is_action_just_pressed("fire_cannon"):
 		if projectile_container == null:
@@ -58,6 +65,7 @@ func _physics_process(delta):
 
 	velocity = move_and_slide_with_snap(velocity, snap_vector, FLOOR_NORMAL, true, 4, SLOPE_THRESHOLD) # Usando move_and_slide_with_snap y con threshold de slope
 	
+
 	if ! is_on_floor():
 		animation_body.play("jump")	
 	else:
@@ -69,7 +77,8 @@ func _physics_process(delta):
 			body.flip_h = true
 		if velocity.x == 0:
 			animation_body.play("idle")	
-				
+		if Collision.rotation == 90:
+			animation_body.play("down")		
 
 func notify_hit():
 	print("I'm player and imma die")

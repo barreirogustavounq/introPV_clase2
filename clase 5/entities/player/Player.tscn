@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://entities/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/player/girl_spritesheet.png" type="Texture" id=2]
@@ -13,9 +13,24 @@ atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 6714.41, 2997.79 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 13.7002, 38.6411 )
+extents = Vector2( 11.9007, 27.7789 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
+resource_name = "down"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 16, 17 ]
+}
+
+[sub_resource type="Animation" id=3]
 resource_name = "idle"
 length = 0.6
 loop = true
@@ -51,8 +66,7 @@ tracks/0/keys = {
 "values": [ 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 74 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "walk"
+[sub_resource type="Animation" id=5]
 length = 2.3
 loop = true
 step = 0.2
@@ -73,6 +87,8 @@ tracks/0/keys = {
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 1 )
+ACCELERATION = 30.0
+H_SPEED_LIMIT = 250.0
 
 [node name="Body" type="Sprite" parent="."]
 position = Vector2( -43.6535, -52.7811 )
@@ -85,14 +101,15 @@ frame = 30
 region_rect = Rect2( -21.6478, -3.17088, 6654.85, 3035.82 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 1.00742, 5.789 )
+position = Vector2( 0.901471, -4.87529 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Body")
-anims/idle = SubResource( 5 )
+anims/down = SubResource( 6 )
+anims/idle = SubResource( 3 )
 anims/jump = SubResource( 4 )
-anims/walk = SubResource( 3 )
+anims/walk = SubResource( 5 )
 
 [node name="slime" type="Sprite" parent="."]
 position = Vector2( 1.55907, -36.0814 )
