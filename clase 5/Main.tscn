@@ -573,7 +573,7 @@ texture = ExtResource( 11 )
 motion_scale = Vector2( 0.9, 1 )
 
 [node name="Sprite" type="Sprite" parent="CanvasLayer/ParallaxBackground/ParallaxLayer2"]
-position = Vector2( -58.6143, -887.062 )
+position = Vector2( -61.6143, -887.062 )
 scale = Vector2( 3.45419, 4.50704 )
 texture = ExtResource( 9 )
 
